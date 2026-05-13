@@ -1,0 +1,33 @@
+name: Airpulse Zero-Downtime Deploy
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up NCP CLI
+      run: |
+        curl -o ncp-cli.tar.gz https://api.ncloud.com/cli/v1/download
+        tar -xzf ncp-cli.tar.gz
+        ./ncloud configure set ncloud_access_key_id ${{ secrets.NCP_ACCESS_KEY }}
+        ./ncloud configure set ncloud_secret_access_key ${{ secrets.NCP_SECRET_KEY }}
+
+    - name: Docker Build & Push to NCR
+      run: |
+        docker build -t ncr.ncloud.com/airpulse/dashboard:${{ github.sha }} .
+        docker login -u ${{ secrets.NCP_ACCESS_KEY }} -p ${{ secrets.NCP_SECRET_KEY }} ncr.ncloud.com
+        docker push ncr.ncloud.com/airpulse/dashboard:${{ github.sha }}
+
+    - name: Blue-Green Deployment Logic
+      run: |
+        sed -i "s|image: .*|image: ncr.ncloud.com/airpulse/dashboard:${{ github.sha }}|" k8s/deployment.yaml
+        kubectl apply -f k8s/deployment.yaml
+        kubectl scale deployment airpulse-dashboard-green --replicas=3
+        kubectl rollout status deployment/airpulse-dashboard-green
+        kubectl patch service airpulse-service -p '{"spec":{"selector":{"color":"green"}}}'
+        kubectl scale deployment airpulse-dashboard-blue --replicas=0

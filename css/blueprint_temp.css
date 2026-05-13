@@ -1,0 +1,178 @@
+/* Append to existing CSS for Blueprints */
+.blueprint-section {
+    border-radius: 24px;
+    padding: 3rem;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+}
+
+.blueprint-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.blueprint-header h3 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.blueprint-header p {
+    color: var(--text-muted);
+}
+
+.blueprint-grid-ui {
+    display: flex;
+    gap: 1rem;
+    height: 400px;
+}
+
+.blueprint-pane {
+    background: rgba(14, 38, 77, 0.4); /* Blueprint dark blue tint */
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.pane-main {
+    flex: 2;
+}
+
+.blueprint-sidebar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.pane-sub {
+    flex: 1;
+}
+
+.pane-label {
+    background: rgba(59, 130, 246, 0.2);
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent-cyan);
+    border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.blueprint-content {
+    flex: 1;
+    position: relative;
+    /* Grid background */
+    background-image: 
+        linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+/* Simulated CAD lines */
+.line {
+    position: absolute;
+    background-color: var(--accent-cyan);
+    opacity: 0.6;
+}
+
+.v-line {
+    top: 0;
+    bottom: 0;
+    width: 2px;
+}
+
+.h-line {
+    left: 0;
+    right: 0;
+    height: 2px;
+}
+
+@media (max-width: 900px) {
+    .blueprint-grid-ui {
+        flex-direction: column;
+        height: 600px;
+    }
+}
+/* Hillside Section Visualization */
+.hill-visual-container {
+    position: relative;
+    height: 450px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 16px;
+    margin-top: 2rem;
+    overflow: hidden;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.slope-line {
+    position: absolute;
+    bottom: -50px;
+    left: -50px;
+    width: 120%;
+    height: 400px;
+    background: linear-gradient(150deg, transparent 50%, rgba(59, 130, 246, 0.1) 50%);
+    border-top: 2px dashed rgba(59, 130, 246, 0.4);
+    z-index: 1;
+}
+
+.stepped-house {
+    position: absolute;
+    bottom: 40px;
+    left: 150px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.floor {
+    width: 200px;
+    height: 80px; /* Represents 2400mm scale */
+    background: rgba(6, 182, 212, 0.15);
+    border: 2px solid var(--accent-cyan);
+    margin-left: calc(var(--offset) * 60px);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-cyan);
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.floor-1 { --offset: 0; }
+.floor-2 { --offset: 1; bottom: 0px; }
+.floor-3 { --offset: 2; bottom: 0px; }
+
+.window.namsan-view {
+    position: absolute;
+    right: 0;
+    top: 10%;
+    width: 8px;
+    height: 80%;
+    background: rgba(255,255,255,0.6);
+    box-shadow: 0 0 15px var(--accent-cyan);
+}
+
+.dimension-line {
+    position: absolute;
+    left: 100px;
+    bottom: 50px;
+    height: 80px;
+    border-left: 1px solid var(--text-muted);
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.annotation {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    font-size: 0.9rem;
+    color: var(--accent-cyan);
+    font-style: italic;
+}

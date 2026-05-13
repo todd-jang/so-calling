@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArchScript Pipeline | Climate Intelligence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+    <link rel="stylesheet" href="css/style.css?v=5">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3204/3204739.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- AR & Spatial Computing Infrastructure -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+</head>
+<body>
+    <!-- Step Navigation Bar -->
+    <nav class="navbar glass">
+        <div class="logo">
+            <span class="logo-icon">🌍</span>
+            <h1>ArchScript <span class="accent">AI-Physics</span></h1>
+        </div>
+        <div class="step-nav">
+            <button class="step-btn active" data-step="0"><span class="step-num">1</span> Climate</button>
+            <div class="step-line"></div>
+            <button class="step-btn" data-step="1"><span class="step-num">2</span> Site</button>
+            <div class="step-line"></div>
+            <button class="step-btn" data-step="2"><span class="step-num">3</span> Analysis</button>
+            <div class="step-line"></div>
+            <button class="step-btn" data-step="3"><span class="step-num">4</span> Rooms</button>
+            <div class="step-line"></div>
+            <button class="step-btn" data-step="4"><span class="step-num">5</span> Server</button>
+        </div>
+    </nav>
+
+    <main class="container">
+
+        <!-- STEP 1: Climate -->
+        <div class="step-page" data-step="0">
+            <header class="hero" id="overview">
+                <div class="hero-content glass">
+                    <div class="hero-badge">Generative Architecture</div>
+                    <h2>데이터가 만드는 <br><span class="gradient-text">건축 물리학의 미래</span></h2>
+                    <p>지역 이름만 입력하면 기후 API와 물리 엔진이 결합하여 <br>단열, 차양, 자재를 실시간으로 결정합니다.</p>
+                </div>
+            </header>
+
+            <section class="climate-dashboard glass" id="climate">
+                <div class="blueprint-header">
+                    <h3>Climate Intelligence Dashboard</h3>
+                    <p>현재 선택 지역: <span id="current-city" class="location-highlight">Loading...</span></p>
+                </div>
+                <div class="physics-grid">
+                    <div class="physics-item">
+                        <span class="physics-label">Insulation (R-Val)</span>
+                        <span id="insulation-val" class="physics-val">--</span>
+                    </div>
+                    <div class="physics-item">
+                        <span class="physics-label">Ceiling Height</span>
+                        <span id="ceiling-height-val" class="physics-val">--</span>
+                    </div>
+                    <div class="physics-item">
+                        <span class="physics-label">Topography</span>
+                        <span id="topography-val" class="physics-val">--</span>
+                    </div>
+                    <div class="physics-item">
+                        <span class="physics-label">Shading Depth</span>
+                        <span id="shading-val" class="physics-val">--</span>
+                    </div>
+                    <div class="physics-item">
+                        <span class="physics-label">Window Ratio</span>
+                        <span id="wwr-val" class="physics-val">--</span>
+                    </div>
+                    <div class="physics-item">
+                        <span class="physics-label">Primary HVAC</span>
+                        <span id="hvac-val" class="physics-val">--</span>
+                    </div>
+                </div>
+            </section>
+
+            <div class="step-footer">
+                <div></div>
+                <button class="step-next-btn" onclick="goStep(1)">Site Analysis →</button>
+            </div>
+        </div>
+
+        <!-- STEP 2: Site -->
+        <div class="step-page" data-step="1">
+            <section class="blueprint-section glass" id="hillside-view">
+                <div class="blueprint-header">
+                    <h3>Hillside Section View (Hannam-dong)</h3>
+                    <p>북쪽 구릉 지형을 활용한 계단식 단면 및 2400mm 낮은 층고 설계</p>
+                </div>
+                <div class="hill-visual-container">
+                    <div class="slope-line"></div>
+                    <div class="stepped-house">
+                        <div class="floor floor-3">
+                            <span class="floor-label">3F: Luxury Bath</span>
+                            <div class="window namsan-view"></div>
+                        </div>
+                        <div class="floor floor-2">
+                            <span class="floor-label">2F: Bedroom & Studio</span>
+                            <div class="window namsan-view"></div>
+                        </div>
+                        <div class="floor floor-1">
+                            <span class="floor-label">1F: Living & Piano</span>
+                            <div class="window namsan-view"></div>
+                        </div>
+                    </div>
+                    <div class="dimension-line">Ceiling: 2,400mm</div>
+                    <div class="annotation">Northern Hill Slope (Namsan-side)</div>
+                </div>
+            </section>
+
+            <section class="blueprint-section glass" id="optimization-map">
+                <div class="blueprint-header">
+                    <h3>AI Optimization Heatmap</h3>
+                    <p>남산 조망 지수(View Score)와 동선 효율(Circulation)의 실시간 물리 분석</p>
+                </div>
+                <div class="heatmap-container">
+                    <canvas id="optCanvas" width="800" height="500"></canvas>
+                    <div class="map-legend">
+                        <div class="legend-item"><span class="dot view"></span> Namsan View Ray</div>
+                        <div class="legend-item"><span class="dot circ"></span> Circulation Flow</div>
+                        <div class="legend-item"><span class="dot score"></span> High Value Point</div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="step-footer">
+                <button class="step-prev-btn" onclick="goStep(0)">← Climate</button>
+                <button class="step-next-btn" onclick="goStep(2)">3D Analysis →</button>
+            </div>
+        </div>
+
+        <!-- STEP 3: Analysis -->
+        <div class="step-page" data-step="2">
+            <section class="blueprint-section glass" id="analysis-3d">
+                <div class="blueprint-header">
+                    <h3>3D AI Digital Twin Analysis</h3>
+                    <p>3ds Max 모델 기반 동선 최적화 및 조망 지수 정밀 수치 분석 (Hannam Edition)</p>
+                </div>
+                <div class="action-buttons">
+                    <button id="btn-original" class="btn-layout" onclick="window.viewMode='original'">🛋️ Original Layout</button>
+                    <button id="btn-optimized" class="btn-layout" onclick="window.viewMode='optimized'">🧠 AI Optimized</button>
+                </div>
+                <div class="viewport-container">
+                    <canvas id="canvas3D" width="1000" height="600"></canvas>
+                    
+                    <!-- Floating Numerical HUD -->
+                    <div class="hud-overlay">
+                        <div class="hud-card glass view-score">
+                            <div class="hud-label">VIEW SCORE (NAMSAN)</div>
+                            <div class="hud-value view-score-val">98.4%</div>
+                        </div>
+                        <div class="hud-card glass circulation">
+                            <div class="hud-label">CIRCULATION EFFICIENCY</div>
+                            <div class="hud-value circulation-val">96.2%</div>
+                        </div>
+                    </div>
+
+                    <div class="hud-coords glass">
+                        <div class="coords-title">// OPTIMAL_COORDINATES</div>
+                        <div>PIANO: [4200.5, 1200.0, 0.0]</div>
+                        <div>STUDIO: [-1200.0, 3500.2, 0.0]</div>
+                        <div class="coords-footer">ITERATIONS: 4,096 pts</div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="step-footer">
+                <button class="step-prev-btn" onclick="goStep(1)">← Site</button>
+                <button class="step-next-btn" onclick="goStep(3)">Room Layouts →</button>
+            </div>
+        </div>
+
+            <!-- STEP 4: Space Visualization & Analysis -->
+            <section class="space-analysis-section glass" id="space-analysis">
+                <div class="step-header">
+                    <h2>Step 4: Photorealistic Space Analysis</h2>
+                    <p>3ds Max V-Ray 렌더링 기반 공간별 AI 최적화 및 거주 환경 분석</p>
+                </div>
+                
+                <div class="space-container">
+                    <div class="space-tabs" id="space-tabs-ui">
+                        <!-- Dynamic Space Tabs -->
+                    </div>
+                    
+                    <div class="space-viewer">
+                        <img id="space-main-img" src="assets/room_01_living.png" class="photoreal-bg" alt="Room 01 Living" title="Room 01 Living">
+                        <canvas id="spaceCanvas" width="900" height="500"></canvas>
+                        
+                        <div class="space-hud">
+                            <div class="hud-item">
+                                <span class="label">LIGHTING</span>
+                                <div class="bar"><div class="fill w-92"></div></div>
+                            </div>
+                            <div class="hud-item">
+                                <span class="label">AIR QUALITY</span>
+                                <div class="bar"><div class="fill w-88"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="step-footer">
+                <button class="step-prev-btn" onclick="goStep(2)">← 3D Global View</button>
+                <button class="step-next-btn" onclick="goStep(4)">System Monitor →</button>
+            </div>
+        </div>
+
+        <!-- STEP 5: Server Monitoring -->
+        <div class="step-page" data-step="4">
+            <section class="blueprint-section glass" id="server-monitor">
+                <div class="blueprint-header">
+                    <h3>Spatial Infrastructure & SLO Dashboard</h3>
+                    <p>Meta-level Reliability: 99.99% Target | 12ms Edge Latency</p>
+                </div>
+                
+                <div class="server-grid">
+                    <div class="server-card glass">
+                        <h4>Cluster Health</h4>
+                        <div class="status-indicator online">ONLINE</div>
+                        <div class="server-stat">
+                            <span>Nodes</span><span class="val">12 Active</span>
+                        </div>
+                        <div class="server-stat">
+                            <span>Avg CPU</span><span class="val">14%</span>
+                        </div>
+                        <div class="server-stat">
+                            <span>Memory</span><span class="val">42.1GB / 128GB</span>
+                        </div>
+                    </div>
+                    
+                    <div class="server-card glass">
+                        <h4>Data Stream (Redis)</h4>
+                        <div class="chart-mock" id="redis-load-chart"></div>
+                        <div class="server-stat">
+                            <span>Hit Rate</span><span class="val val-success">99.8%</span>
+                        </div>
+                        <div class="server-stat">
+                            <span>Ops/Sec</span><span class="val">42.5k</span>
+                        </div>
+                    </div>
+                    
+                    <div class="server-card glass">
+                        <h4>Network Traffic</h4>
+                        <div class="server-stat">
+                            <span>Active Users</span><span class="val">214</span>
+                        </div>
+                        <div class="server-stat">
+                            <span>Bandwidth</span><span class="val">8.2Gbps</span>
+                        </div>
+                        <div class="server-stat">
+                            <span>Latency</span><span class="val val-success">12ms</span>
+                        </div>
+                    </div>
+                    
+                    <div class="server-card glass card-critical">
+                        <h4>Error Budget (SLO)</h4>
+                        <div class="server-stat">
+                            <span>Target</span><span class="val">99.99%</span>
+                        </div>
+                        <div class="server-stat">
+                            <span>Remaining</span><span class="val val-critical">52min/yr</span>
+                        </div>
+                        <div class="server-stat">
+                            <span>Status</span><span class="val">HEALTHY</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="step-footer">
+                <button class="step-prev-btn" onclick="goStep(3)">← Rooms</button>
+                <div></div>
+            </div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="js/app.js?v=3"></script>
+        <script>
+            // Step Navigation Logic
+            function goStep(n) {
+                localStorage.setItem('hannam_last_step', n); // Save step state
+                document.querySelectorAll('.step-page').forEach(p => p.style.display = 'none');
+                const targetPage = document.querySelector(`.step-page[data-step="${n}"]`);
+                if (targetPage) targetPage.style.display = 'block';
+                
+                document.querySelectorAll('.step-btn').forEach(b => b.classList.remove('active'));
+                const targetBtn = document.querySelector(`.step-btn[data-step="${n}"]`);
+                if (targetBtn) targetBtn.classList.add('active');
+                
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            }
+
+            // Room Tab Logic with Persistence
+            function setRoom(roomKey, btn) {
+                window.currentRoom = roomKey;
+                localStorage.setItem('hannam_last_room', roomKey); // Save room state
+                document.querySelectorAll('.room-tab').forEach(b => b.classList.remove('active'));
+                if (btn) btn.classList.add('active');
+            }
+
+            // Initial Load
+            document.addEventListener('DOMContentLoaded', () => {
+                // 1. Restore Step
+                const lastStep = localStorage.getItem('hannam_last_step') || 0;
+                goStep(parseInt(lastStep));
+
+                // 2. Restore Room (if in Step 4)
+                const lastRoom = localStorage.getItem('hannam_last_room') || 0;
+                window.currentRoom = isNaN(lastRoom) ? lastRoom : parseInt(lastRoom);
+                
+                // Update active room tab UI
+                const roomBtns = document.querySelectorAll('.room-tab');
+                roomBtns.forEach(btn => {
+                    const onclickStr = btn.getAttribute('onclick') || "";
+                    if (onclickStr.includes(window.currentRoom)) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+
+                // Bind click events to step buttons
+                document.querySelectorAll('.step-btn').forEach(btn => {
+                    btn.addEventListener('click', () => goStep(parseInt(btn.dataset.step)));
+                });
+            });
+        </script>
+    </main>
+</body>
+</html>

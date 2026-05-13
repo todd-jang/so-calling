@@ -1,0 +1,25 @@
+{
+  "name": "ArchScript Intelligence Platform",
+  "short_name": "ArchScript",
+  "description": "Real-time AI collaboration platform with sentiment analysis, auto-classification, and live summarization.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#38bdf8",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/vite.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/vite.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

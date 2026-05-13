@@ -1,0 +1,62 @@
+groups:
+- name: airpulse-v2-alerts
+  rules:
+  # 1. Cloud Connectivity Failure
+  - alert: CloudDown
+    expr: airpulse_cloud_status == 0
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: "CRITICAL: {{ $labels.cloud }} Cloud is DOWN"
+      description: "Health check for {{ $labels.cloud }} has failed completely for over 1 minute."
+
+  # 2. Degraded Performance
+  - alert: CloudDegraded
+    expr: airpulse_cloud_status == 1
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Warning: {{ $labels.cloud }} Cloud is DEGRADED"
+      description: "{{ $labels.cloud }} is showing high latency (>2s) or intermittent failures."
+
+  # 3. High Consecutive Failures (Circuit Breaker Context)
+  - alert: ConsecutiveFailuresHigh
+    expr: airpulse_cloud_consecutive_failures >= 3
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Circuit Breaker Alert: {{ $labels.cloud }}"
+      description: "{{ $labels.cloud }} has failed {{ $value }} consecutive health checks."
+
+  # 4. Failover Activity
+  - alert: HighFailoverRate
+    expr: rate(airpulse_bridge_failover_total[5m]) > 0
+    for: 2m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Bridge Failover Active"
+      description: "The hybrid bridge is currently failing over to the secondary cloud."
+
+  # 5. Latency Warning
+  - alert: BridgeLatencyHigh
+    expr: airpulse_cloud_latency_ms > 1500
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "High Latency on {{ $labels.cloud }}"
+      description: "95th percentile latency on {{ $labels.cloud }} is {{ $value }}ms."
+
+  # 6. Infrastructure: NKS CPU Usage
+  - alert: NksCpuUsageHigh
+    expr: sum(rate(node_cpu_seconds_total{mode!="idle", job="nks-nodes"}[5m])) by (instance) > 0.85
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "NKS Node High CPU"
+      description: "NKS Node {{ $labels.instance }} CPU usage is above 85%."

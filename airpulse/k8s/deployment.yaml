@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airpulse-dashboard-blue
+  labels:
+    app: airpulse
+    color: blue
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: airpulse
+      color: blue
+  template:
+    metadata:
+      labels:
+        app: airpulse
+        color: blue
+    spec:
+      containers:
+      - name: dashboard
+        image: ncr.ncloud.com/airpulse/dashboard:latest
+        ports:
+        - containerPort: 3000
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "256Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airpulse-dashboard-green
+  labels:
+    app: airpulse
+    color: green
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: airpulse
+      color: green
+  template:
+    metadata:
+      labels:
+        app: airpulse
+        color: green
+    spec:
+      containers:
+      - name: dashboard
+        image: ncr.ncloud.com/airpulse/dashboard:v2
+        ports:
+        - containerPort: 3000
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "256Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hannam Complex Master Plan — Multi-Unit Residential</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Fira+Code:wght@400&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { background:#070a14; color:#e2e8f0; font-family:'Noto Sans KR',sans-serif; overflow-x:hidden; }
+        .toolbar { display:flex; gap:10px; padding:12px 24px; background:#0f172a; border-bottom:1px solid rgba(255,255,255,0.08); flex-wrap:wrap; align-items:center; position:sticky; top:0; z-index:100; }
+        .toolbar h1 { font-size:0.9rem; color:#06b6d4; margin-right:auto; letter-spacing:1px; font-weight:800; }
+        .tab { padding:6px 10px; border-radius:4px; border:1px solid rgba(255,255,255,0.1); background:transparent; color:#64748b; font-size:0.7rem; font-weight:600; cursor:pointer; transition:all .2s; white-space: nowrap; }
+        .tab:hover { border-color:#06b6d4; color:#06b6d4; background:rgba(6,182,212,0.05); }
+        .tab.active { background:rgba(6,182,212,0.15); border-color:#06b6d4; color:#06b6d4; }
+        
+        @media (max-width: 768px) {
+            .toolbar { padding: 8px 12px; gap: 6px; }
+            .toolbar h1 { width: 100%; margin-bottom: 8px; text-align: center; }
+            .tab { flex: 1; text-align: center; font-size: 0.65rem; padding: 5px; }
+            .legend { bottom: 10px; left: 10px; right: 10px; grid-template-columns: 1fr 1fr 1fr; font-size: 0.6rem; }
+        }
+
+        .canvas-wrap { display:flex; flex-direction:column; align-items:center; padding:20px; min-height:calc(100vh - 60px); }
+        canvas { background:#010409; border:1px solid #1e293b; border-radius:4px; box-shadow:0 10px 40px rgba(0,0,0,0.6); max-width:100%; height:auto; }
+        .legend { position:fixed; bottom:20px; left:20px; background:rgba(15, 23, 42, 0.9); padding:12px; border-radius:8px; border:1px solid rgba(255,255,255,0.1); font-size:0.7rem; color:#94a3b8; -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); display:grid; grid-template-columns:1fr 1fr; gap:8px 20px; }
+        .legend-item { display:flex; align-items:center; gap:8px; }
+        .box { width:10px; height:10px; border-radius:1px; }
+        .box-wall { background:#06b6d4; border:1px solid white; }
+        .box-complex { background:rgba(168, 85, 247, 0.4); border:1px solid #a855f7; }
+        .box-road { background:#475569; }
+    </style>
+</head>
+<body>
+    <div class="toolbar">
+        <h1>🏙️ HANNAM COMPLEX MASTER</h1>
+        <button class="tab" onclick="switchSheet(0)">단지 배치도 (SITE)</button>
+        <button class="tab" onclick="switchSheet(1)">표준 유닛 (UNIT A)</button>
+        <button class="tab" onclick="switchSheet(2)">단지 단면도 (SECTION)</button>
+        <button class="tab" onclick="switchSheet(3)">기계설비 통합 (MEP)</button>
+    </div>
+    <div class="canvas-wrap">
+        <canvas id="bp" width="1300" height="850"></canvas>
+    </div>
+    <div class="legend">
+        <div class="legend-item"><div class="box box-complex"></div> <span>Residential Unit</span></div>
+        <div class="legend-item"><div class="box box-road"></div> <span>Access Road</span></div>
+        <div class="legend-item"><div class="box box-wall"></div> <span>Community Center</span></div>
+    </div>
+<script>
+const c = document.getElementById('bp');
+const ctx = c.getContext('2d');
+let currentSheet = parseInt(localStorage.getItem('hannam_complex_sheet')) || 0;
+const S = 0.05; 
+const OX = 150, OY = 700; 
+
+function switchSheet(n) {
+    currentSheet = n;
+    localStorage.setItem('hannam_complex_sheet', n);
+    document.querySelectorAll('.tab').forEach((b,i) => { b.classList.toggle('active', i===n); });
+    draw();
+}
+
+function px(x) { return OX + x * S; }
+function py(y) { return OY - y * S; }
+function mm(v) { return v * S; }
+
+function drawRect(x,y,w,h,color,stroke='#06b6d4',lw=1) {
+    ctx.fillStyle=color; ctx.fillRect(px(x),py(y+h),mm(w),mm(h));
+    ctx.strokeStyle=stroke; ctx.lineWidth=lw; ctx.strokeRect(px(x),py(y+h),mm(w),mm(h));
+}
+function drawLine(x1,y1,x2,y2,color='#06b6d4',lw=1,dash=[]) {
+    ctx.strokeStyle=color; ctx.lineWidth=lw; ctx.setLineDash(dash);
+    ctx.beginPath(); ctx.moveTo(px(x1),py(y1)); ctx.lineTo(px(x2),py(y2)); ctx.stroke(); ctx.setLineDash([]);
+}
+function drawText(x,y,text,size=11,color='#e2e8f0',align='left',bold=false, bg=true) {
+    ctx.font=(bold?'bold ':'')+size+'px "Inter", "Noto Sans KR"'; ctx.textAlign=align;
+    if(bg){
+        const m = ctx.measureText(text);
+        ctx.fillStyle='rgba(7,10,20,0.8)'; ctx.fillRect(px(x)-(align==='center'?m.width/2+4:4), py(y)-size-2, m.width+8, size+6);
+    }
+    ctx.fillStyle=color; ctx.fillText(text,px(x),py(y));
+}
+
+function drawTitleBlock(title, sheetNum) {
+    ctx.strokeStyle='rgba(255,255,255,0.1)'; ctx.lineWidth=1; ctx.strokeRect(40,40,c.width-80,c.height-80);
+    ctx.fillStyle='rgba(15,23,42,0.95)'; ctx.fillRect(40, c.height-100, c.width-80, 60);
+    drawText(70, c.height-65, 'HANNAM MULTI-UNIT COMPLEX MASTER PLAN', 13, '#06b6d4', 'left', true, false);
+    drawText(c.width/2, c.height-65, title, 18, '#fff', 'center', true, false);
+    drawText(c.width-100, c.height-65, sheetNum, 12, '#94a3b8', 'right', false, false);
+}
+
+// --- RENDERING FUNCTIONS ---
+
+function drawSitePlan() {
+    ctx.fillStyle='#010409'; ctx.fillRect(0,0,c.width,c.height);
+    drawTitleBlock('MASTER SITE PLAN (배치도)', 'CP-101');
+    
+    // Hill Contours
+    ctx.strokeStyle='rgba(255,255,255,0.05)'; ctx.lineWidth=1;
+    for(let i=0; i<10; i++) {
+        ctx.beginPath(); ctx.moveTo(px(-2000), py(i*1500)); 
+        ctx.bezierCurveTo(px(5000), py(i*1500+500), px(10000), py(i*1500-500), px(22000), py(i*1500+200));
+        ctx.stroke();
+    }
+
+    // Access Road
+    drawRect(-2000, 0, 24000, 4000, 'rgba(71, 85, 105, 0.3)', '#475569', 2);
+    drawText(10000, 2000, 'MAIN ACCESS ROAD (한남대로 연접)', 12, '#94a3b8', 'center');
+
+    // Units Arrangement (6 Units in 2 Rows)
+    const units = [
+        {x: 1000, y: 5000, id: 'A1'}, {x: 7000, y: 5000, id: 'A2'}, {x: 13000, y: 5000, id: 'A3'},
+        {x: 1000, y: 11000, id: 'B1'}, {x: 7000, y: 11000, id: 'B2'}, {x: 13000, y: 11000, id: 'B3'}
+    ];
+    
+    units.forEach(u => {
+        drawRect(u.x, u.y, 5000, 5000, 'rgba(168, 85, 247, 0.15)', '#a855f7', 2);
+        drawText(u.x + 2500, u.y + 2500, 'UNIT ' + u.id, 10, '#fff', 'center', true);
+        // Individual Garage Entry
+        drawRect(u.x + 500, u.y - 1000, 4000, 1000, 'rgba(100, 116, 139, 0.2)', '#64748b', 1);
+    });
+
+    // Community Center
+    drawRect(19000, 6000, 3000, 8000, 'rgba(6, 182, 212, 0.1)', '#06b6d4', 2);
+    drawText(20500, 10000, 'COMMUNITY\nCLUBHOUSE', 11, '#06b6d4', 'center', true);
+
+    drawText(10000, 15000, 'NAMSAN VIEW DIRECTION (NORTH)', 12, '#eab308', 'center', true);
+    drawLine(10000, 14500, 10000, 16000, '#eab308', 2, [5,5]);
+}
+
+function drawUnitDetail() {
+    ctx.fillStyle='#010409'; ctx.fillRect(0,0,c.width,c.height);
+    drawTitleBlock('STANDARD UNIT TYPE A (표준 세트)', 'CP-102');
+    // Simplified 1F Plan of Unit A
+    drawRect(4000, 4000, 10000, 8000, 'rgba(6, 182, 212, 0.15)', '#06b6d4', 2);
+    drawText(9000, 8000, 'LIVING / DINING / KITCHEN', 14, '#fff', 'center', true);
+    drawRect(4000, 1000, 6000, 3000, 'rgba(100, 116, 139, 0.2)', '#64748b', 2);
+    drawText(7000, 2500, 'PRIVATE GARAGE', 11, '#94a3b8', 'center');
+}
+
+function drawComplexSection() {
+    ctx.fillStyle='#010409'; ctx.fillRect(0,0,c.width,c.height);
+    drawTitleBlock('COMPLEX CROSS SECTION (단지 단면)', 'CP-201');
+    
+    // Sloped Terrain
+    ctx.beginPath(); ctx.moveTo(px(-2000), py(0));
+    ctx.lineTo(px(2000), py(0)); ctx.lineTo(px(6000), py(4000));
+    ctx.lineTo(px(10000), py(8000)); ctx.lineTo(px(14000), py(12000));
+    ctx.lineTo(px(22000), py(12000));
+    ctx.strokeStyle='#10b981'; ctx.lineWidth=3; ctx.stroke();
+    
+    // Stepped Units
+    for(let i=0; i<3; i++) {
+        const x = 2000 + i*4000, y = i*4000;
+        drawRect(x, y, 4000, 3000, 'rgba(168, 85, 247, 0.1)', '#a855f7', 2);
+        drawText(x+2000, y+1500, 'UNIT ROW ' + (i+1), 9, '#fff', 'center');
+    }
+}
+
+function drawComplexMEP() {
+    ctx.fillStyle='#010409'; ctx.fillRect(0,0,c.width,c.height);
+    drawTitleBlock('INTEGRATED COMPLEX UTILITY (통합 설비)', 'CP-301');
+    drawText(10000, 8000, 'CENTRALIZED GEOTHERMAL & WATER HUB', 14, '#06b6d4', 'center', true);
+    // Main supply lines to units
+    drawLine(0, 4000, 20000, 4000, '#06b6d4', 4);
+    drawText(5000, 4500, 'MAIN HVAC SUPPLY LINE', 9, '#06b6d4');
+}
+
+const sheets = [drawSitePlan, drawUnitDetail, drawComplexSection, drawComplexMEP];
+function draw() { sheets[currentSheet](); }
+switchSheet(currentSheet);
+</script>
+</body>
+</html>

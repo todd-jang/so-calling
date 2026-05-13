@@ -1,0 +1,41 @@
+{
+  "title": "ArchScript AI Infrastructure Control",
+  "panels": [
+    {
+      "title": "AI Cloud Bridge Health",
+      "type": "gauge",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+      "targets": [
+        { "expr": "airpulse_bridge_requests_total", "legendFormat": "Total Requests" }
+      ]
+    },
+    {
+      "title": "System Resource Load",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+      "targets": [
+        { "expr": "system_memory_usage_percent", "legendFormat": "Memory %" },
+        { "expr": "system_cpu_load_1min", "legendFormat": "CPU Load" }
+      ]
+    },
+    {
+      "title": "GPU Temperature (Future GPU Server)",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 8 },
+      "targets": [
+        { "expr": "nvidia_gpu_temperature", "legendFormat": "GPU Temp" }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "celsius", "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "red", "value": 80 }] } }
+      }
+    },
+    {
+      "title": "VRAM Usage (IBM Granite)",
+      "type": "gauge",
+      "gridPos": { "h": 4, "w": 6, "x": 6, "y": 8 },
+      "targets": [
+        { "expr": "nvidia_gpu_memory_used_bytes / nvidia_gpu_memory_total_bytes * 100", "legendFormat": "VRAM %" }
+      ]
+    }
+  ]
+}

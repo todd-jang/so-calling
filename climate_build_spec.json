@@ -1,0 +1,11 @@
+{
+    "city": "SEOUL",
+    "physics_metrics": {
+        "insulation_thickness_mm": 220,
+        "ceiling_height_mm": 2600,
+        "topography_focus": "HILLSIDE_SLOPE",
+        "overhang_depth_mm": 1200,
+        "window_to_wall_ratio": 0.65,
+        "hvac_priority": "ENERGY_EFFICIENCY"
+    }
+}

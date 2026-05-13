@@ -1,0 +1,67 @@
+{
+    "room_flow": [
+        "LivingRoom",
+        "Kitchen",
+        "Bedroom",
+        "Bathroom"
+    ],
+    "objects": [
+        {
+            "room": "LivingRoom",
+            "item": "Bechstein_Grand_Piano",
+            "pos": [
+                1200,
+                3500,
+                0
+            ],
+            "rot": 45,
+            "priority": "Highest",
+            "desc": "거실 내 최적의 음향 지점(Sweet Spot)에 배치"
+        },
+        {
+            "room": "Guitar_Studio",
+            "item": "Acoustic_Guitar_Setup",
+            "pos": [
+                11500,
+                1500,
+                0
+            ],
+            "rot": 180,
+            "features": [
+                "Sound_Absorption",
+                "Quiet_Zone"
+            ],
+            "desc": "집 안에서 가장 조용한 구석에 독립된 연주 공간 조성"
+        },
+        {
+            "room": "Kitchen",
+            "item": "Island_Kitchen",
+            "pos": [
+                5000,
+                3000,
+                0
+            ],
+            "rot": 0
+        },
+        {
+            "room": "Bedroom",
+            "item": "Luxury_King_Bed",
+            "pos": [
+                9000,
+                4000,
+                0
+            ],
+            "rot": 90
+        },
+        {
+            "room": "Bathroom",
+            "item": "Modern_Bath_Unit",
+            "pos": [
+                13000,
+                2000,
+                0
+            ],
+            "rot": 0
+        }
+    ]
+}

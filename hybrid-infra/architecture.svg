@@ -1,0 +1,120 @@
+<svg viewBox="0 0 680 590" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .th { font-family: 'Inter', system-ui, sans-serif; font-size: 14px; font-weight: 500; fill: #f8fafc; }
+    .ts { font-family: 'Inter', system-ui, sans-serif; font-size: 12px; fill: #94a3b8; }
+    .zone-label { font-family: 'Inter', system-ui, sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+    .ncp-blue { fill: #3b82f6; }
+    .ibm-teal { fill: #0d9488; }
+    .amber { fill: #f59e0b; }
+    .purple { fill: #8b5cf6; }
+    .green { fill: #10b981; }
+    .glass { fill: rgba(255, 255, 255, 0.03); stroke: rgba(255, 255, 255, 0.1); }
+    .dashed { stroke-dasharray: 4 4; fill: none; }
+  </style>
+
+  <!-- Client Layer (Top) -->
+  <g transform="translate(40, 36)">
+    <rect width="140" height="40" rx="8" class="glass" />
+    <text x="70" y="25" text-anchor="middle" class="th">Expo 앱</text>
+    
+    <rect x="150" width="140" height="40" rx="8" class="glass" />
+    <text x="220" y="25" text-anchor="middle" class="th">React / Next.js</text>
+    
+    <rect x="300" width="140" height="40" rx="8" class="glass" />
+    <text x="370" y="25" text-anchor="middle" class="th">Admin 관제</text>
+    
+    <rect x="450" width="140" height="40" rx="8" class="glass" />
+    <text x="520" y="25" text-anchor="middle" class="th">알림 수신</text>
+  </g>
+
+  <!-- NCP Zone (Left) -->
+  <rect x="28" y="88" width="270" height="412" rx="12" class="dashed" stroke="#3b82f6" />
+  <text x="40" y="104" class="zone-label ncp-blue">NCP Zone (NKS Cluster)</text>
+
+  <!-- IBM Zone (Right) -->
+  <rect x="384" y="88" width="256" height="412" rx="12" class="dashed" stroke="#0d9488" />
+  <text x="396" y="104" class="zone-label ibm-teal">IBM Cloud Zone</text>
+
+  <!-- Row 1: CDN / Edge -->
+  <g transform="translate(0, 112)">
+    <rect x="40" width="246" height="40" rx="8" fill="#3b82f6" fill-opacity="0.1" stroke="#3b82f6" />
+    <text x="163" y="25" text-anchor="middle" class="th">NCP CDN · Global Edge</text>
+    <rect x="396" width="240" height="40" rx="8" fill="#0d9488" fill-opacity="0.1" stroke="#0d9488" />
+    <text x="516" y="25" text-anchor="middle" class="th">IBM Cloud Internet Svc</text>
+  </g>
+
+  <!-- Row 2: API GW / LB -->
+  <g transform="translate(0, 166)">
+    <rect x="40" width="246" height="40" rx="8" fill="#3b82f6" fill-opacity="0.1" stroke="#3b82f6" />
+    <text x="163" y="25" text-anchor="middle" class="th">NCP API GW · Load Balancer</text>
+    <rect x="396" width="240" height="40" rx="8" fill="#0d9488" fill-opacity="0.1" stroke="#0d9488" />
+    <text x="516" y="25" text-anchor="middle" class="th">IBM API Connect</text>
+  </g>
+
+  <!-- Row 3: Compute (Kubernetes) -->
+  <g transform="translate(0, 220)">
+    <rect x="40" width="246" height="40" rx="8" fill="#3b82f6" fill-opacity="0.2" stroke="#3b82f6" />
+    <text x="163" y="25" text-anchor="middle" class="th">NKS (Naver Kubernetes)</text>
+    
+    <!-- Bridge Line -->
+    <line x1="286" y1="20" x2="396" y2="20" stroke="#94a3b8" stroke-dasharray="2 2" />
+    <rect x="306" y="5" width="70" height="30" rx="15" fill="#1e293b" stroke="#94a3b8" />
+    <text x="341" y="24" text-anchor="middle" font-size="10" class="th">Bridge</text>
+
+    <rect x="396" width="240" height="40" rx="8" fill="#0d9488" fill-opacity="0.2" stroke="#0d9488" />
+    <text x="516" y="25" text-anchor="middle" class="th">IKS (IBM Kubernetes)</text>
+  </g>
+
+  <!-- Row 4: AI / RAG -->
+  <g transform="translate(0, 274)">
+    <rect x="40" width="246" height="40" rx="8" fill="#8b5cf6" fill-opacity="0.1" stroke="#8b5cf6" />
+    <text x="163" y="25" text-anchor="middle" class="th">LangChain · NCP HyperCLOVA</text>
+    <rect x="396" width="240" height="40" rx="8" fill="#8b5cf6" fill-opacity="0.1" stroke="#8b5cf6" />
+    <text x="516" y="25" text-anchor="middle" class="th">Watsonx.ai · RAG Engine</text>
+  </g>
+
+  <!-- Row 5: Database (Split) -->
+  <g transform="translate(0, 328)">
+    <rect x="40" width="116" height="40" rx="8" fill="#3b82f6" fill-opacity="0.1" stroke="#3b82f6" />
+    <text x="98" y="25" text-anchor="middle" class="th">Cloud DB</text>
+    <rect x="166" width="120" height="40" rx="8" fill="#8b5cf6" fill-opacity="0.1" stroke="#8b5cf6" />
+    <text x="226" y="25" text-anchor="middle" class="th">pgvector</text>
+    
+    <rect x="396" width="116" height="40" rx="8" fill="#0d9488" fill-opacity="0.1" stroke="#0d9488" />
+    <text x="454" y="25" text-anchor="middle" class="th">Cloudant</text>
+    <rect x="522" width="116" height="40" rx="8" fill="#8b5cf6" fill-opacity="0.1" stroke="#8b5cf6" />
+    <text x="580" y="25" text-anchor="middle" class="th">Milvus</text>
+  </g>
+
+  <!-- Row 6: Monitoring -->
+  <g transform="translate(0, 382)">
+    <rect x="40" width="246" height="40" rx="8" fill="#f59e0b" fill-opacity="0.1" stroke="#f59e0b" />
+    <text x="163" y="25" text-anchor="middle" class="th">Prometheus · Grafana</text>
+    <rect x="396" width="240" height="40" rx="8" fill="#f59e0b" fill-opacity="0.1" stroke="#f59e0b" />
+    <text x="516" y="25" text-anchor="middle" class="th">IBM Log Analysis</text>
+  </g>
+
+  <!-- Row 7: Notifications -->
+  <g transform="translate(0, 436)">
+    <rect x="40" width="246" height="40" rx="8" fill="#10b981" fill-opacity="0.1" stroke="#10b981" />
+    <text x="163" y="25" text-anchor="middle" class="th">NCP Push (SENS)</text>
+    <rect x="396" width="240" height="40" rx="8" fill="#10b981" fill-opacity="0.1" stroke="#10b981" />
+    <text x="516" y="25" text-anchor="middle" class="th">Event Streams (Kafka)</text>
+  </g>
+
+  <!-- Zero-Downtime Strategy (Bottom) -->
+  <text x="340" y="525" text-anchor="middle" class="zone-label green">Zero-Downtime Deployment Pipeline</text>
+  <g transform="translate(30, 536)">
+    <rect width="143" height="40" rx="8" fill="#10b981" fill-opacity="0.2" stroke="#10b981" />
+    <text x="71.5" y="25" text-anchor="middle" class="th">Blue-Green</text>
+    
+    <rect x="153" width="143" height="40" rx="8" fill="#10b981" fill-opacity="0.2" stroke="#10b981" />
+    <text x="224.5" y="25" text-anchor="middle" class="th">Rolling + HPA</text>
+    
+    <rect x="306" width="143" height="40" rx="8" fill="#10b981" fill-opacity="0.2" stroke="#10b981" />
+    <text x="377.5" y="25" text-anchor="middle" class="th">Circuit Breaker</text>
+    
+    <rect x="459" width="143" height="40" rx="8" fill="#10b981" fill-opacity="0.2" stroke="#10b981" />
+    <text x="530.5" y="25" text-anchor="middle" class="th">Traffic Shadow</text>
+  </g>
+</svg>

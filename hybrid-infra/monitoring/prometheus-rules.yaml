@@ -1,0 +1,29 @@
+groups:
+- name: archscript-alerts
+  rules:
+  - alert: HighCpuUsage
+    expr: sum(rate(container_cpu_usage_seconds_total{container="dashboard"}[5m])) by (pod) > 0.8
+    for: 2m
+    labels:
+      severity: warning
+    annotations:
+      summary: "High CPU usage on pod {{ $labels.pod }}"
+      description: "CPU usage is above 80% for more than 2 minutes."
+
+  - alert: InstanceDown
+    expr: up{job="archscript-api"} == 0
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Instance {{ $labels.instance }} is down"
+      description: "API instance has been down for more than 1 minute."
+
+  - alert: HybridBridgeLatency
+    expr: histogram_quantile(0.95, sum(rate(bridge_request_duration_seconds_bucket[5m])) by (le)) > 0.5
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "High Hybrid Bridge Latency"
+      description: "95th percentile latency of NCP-IBM bridge is above 500ms."
