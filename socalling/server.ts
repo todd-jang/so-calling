@@ -150,7 +150,7 @@ app.post('/api/scraper/run', async (req: Request, res: Response) => {
 });
 
 // ─── Metrics Endpoint (Built-in Grafana) ──────────────────
-import { HybridBridge } from '../airpulse/ncp-ibm/bridge';
+import { HybridBridge } from './airpulse/ncp-ibm/bridge';
 
 app.get('/api/metrics', (req: Request, res: Response) => {
   const bridge = HybridBridge.getInstance();

@@ -1,5 +1,5 @@
-import { HybridBridge } from '../../airpulse/ncp-ibm/bridge';
-import { PushService } from '../../airpulse/notification/push-service';
+import { HybridBridge } from '../airpulse/ncp-ibm/bridge';
+import { PushService } from '../airpulse/notification/push-service';
 import { FlightAPIService } from './FlightAPI';
 import Alert, { IAlert } from '../models/Alert';
 

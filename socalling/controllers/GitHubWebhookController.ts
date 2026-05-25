@@ -1,5 +1,9 @@
 import { Request, Response } from 'express';
-import { TelegramCIBot } from './TelegramCIBot';
+import { TelegramCIBot } from '../services/TelegramCIBot';
+
+type GitHubWebhookRequest = Request & {
+  rawBody?: Buffer | string;
+};
 
 /**
  * GitHub Webhook Controller
@@ -83,7 +87,7 @@ export class GitHubWebhookController {
    * Verify GitHub webhook signature
    * Uses HMAC SHA256 for security
    */
-  private verifySignature(req: Request, signature: string): boolean {
+  private verifySignature(req: GitHubWebhookRequest, signature: string): boolean {
     const crypto = require('crypto');
     const secret = process.env.GITHUB_WEBHOOK_SECRET || '';
 
@@ -93,7 +97,8 @@ export class GitHubWebhookController {
     }
 
     const hmac = crypto.createHmac('sha256', secret);
-    const digest = 'sha256=' + hmac.update(req.rawBody || JSON.stringify(req.body)).digest('hex');
+    const rawBody = req.rawBody ?? JSON.stringify(req.body);
+    const digest = 'sha256=' + hmac.update(rawBody).digest('hex');
 
     return digest === signature;
   }

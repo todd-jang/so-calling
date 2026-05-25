@@ -3,6 +3,7 @@
     "target": "ES2020",
     "module": "commonjs",
     "lib": ["ES2020"],
+    "rootDir": ".",
     "outDir": "./dist",
     "strict": true,
     "esModuleInterop": true,
@@ -13,6 +14,13 @@
     "declarationMap": true,
     "sourceMap": true
   },
-  "include": ["./**/*.ts"],
+  "include": [
+    "server.ts",
+    "controllers/**/*.ts",
+    "middleware/**/*.ts",
+    "models/**/*.ts",
+    "services/**/*.ts",
+    "airpulse/**/*.ts"
+  ],
   "exclude": ["node_modules", "dist", "client"]
 }
